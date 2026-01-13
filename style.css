@@ -1,0 +1,44 @@
+/* 1. The 'Reset' - We clear default browser spacing so we have full control */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* This ensures padding doesn't make boxes wider than they should be */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6; /* A soft grey background is easier on the eyes than pure white */
+    color: #333;
+}
+
+/* 2. The Layout - Using Flexbox to center our dashboard */
+main {
+    display: flex; /* Makes the child divs sit side-by-side */
+    justify-content: space-around; /* Adds equal space between the two task cards */
+    padding: 50px;
+    gap: 20px; /* Modern way to add space specifically between flex items */
+}
+
+/* 3. The 'Card' Look */
+.task-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px; /* Smooth rounded corners look modern */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Adds depth to the UI */
+    width: 45%;
+}
+
+/* 4. The Button Style */
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50; /* A healthy green for 'Save' */
+    color: white;
+    transition: 0.3s; /* Makes the hover effect smooth */
+}
+
+button:hover {
+    background-color: #45a049; /* Darkens the button when you put your mouse over it */
+}
