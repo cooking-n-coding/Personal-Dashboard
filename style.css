@@ -14,6 +14,8 @@ body {
 /* 2. The Layout - Using Flexbox to center our dashboard */
 main {
     display: flex; /* Makes the child divs sit side-by-side */
+    flex-direction: column; /* Stacks the focused area and task cards vertically */
+    align-items: flex-start; /* Centers items horizontally */
     justify-content: space-around; /* Adds equal space between the two task cards */
     padding: 50px;
     gap: 20px; /* Modern way to add space specifically between flex items */
@@ -34,11 +36,11 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50; /* A healthy green for 'Save' */
+    background-color: #1533d8; /* A healthy green for 'Save' */
     color: white;
     transition: 0.3s; /* Makes the hover effect smooth */
 }
 
 button:hover {
-    background-color: #45a049; /* Darkens the button when you put your mouse over it */
+    background-color: #4962ed; /* Darkens the button when you put your mouse over it */
 }
