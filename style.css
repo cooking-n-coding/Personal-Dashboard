@@ -10,6 +10,13 @@ body {
     background-color: #f4f7f6; /* A soft grey background is easier on the eyes than pure white */
     color: #333;
 }
+nav{
+    background-color: #1533d8; /* A strong blue for the nav bar */
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
 
 /* 2. The Layout - Using Flexbox to center our dashboard */
 main {
@@ -36,11 +43,11 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #1533d8; /* A healthy green for 'Save' */
+    background-color: #1533d8; /* A healthy blue for 'Save' */
     color: white;
     transition: 0.3s; /* Makes the hover effect smooth */
 }
 
 button:hover {
-    background-color: #4962ed; /* Darkens the button when you put your mouse over it */
+    background-color: #4962ed; /* lightens the button when you put your mouse over it */
 }
