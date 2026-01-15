@@ -16,13 +16,36 @@ nav{
     padding: 15px 30px;
     font-size: 1.2em;
     font-weight: bold;
+    /* height: 5rem; */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.429);
 }
-
+nav ul {
+    width: 100%;
+    list-style:none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+nav li{
+    height: 0.7rem;
+}
+nav a{
+    height: 100%;
+    color:white;
+    text-decoration: none;
+}
+nav a:hover{
+    color: grey;
+}
+nav h1:first-child{
+    margin-right: auto;
+}
 /* 2. The Layout - Using Flexbox to center our dashboard */
 main {
     display: flex; /* Makes the child divs sit side-by-side */
     flex-direction: column; /* Stacks the focused area and task cards vertically */
-    align-items: flex-start; /* Centers items horizontally */
+    align-items: center; /* Centers items horizontally */
     justify-content: space-around; /* Adds equal space between the two task cards */
     padding: 50px;
     gap: 20px; /* Modern way to add space specifically between flex items */
