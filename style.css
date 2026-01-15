@@ -74,3 +74,13 @@ button {
 button:hover {
     background-color: #4962ed; /* lightens the button when you put your mouse over it */
 }
+
+footer{
+    text-align: center;
+    padding: 20px;
+    background-color: #1533d8;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
