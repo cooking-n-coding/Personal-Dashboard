@@ -57,9 +57,11 @@ main {
     padding: 25px;
     border-radius: 12px; /* Smooth rounded corners look modern */
     box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Adds depth to the UI */
-    width: 45%;
+    width: 50%;
 }
-
+.task-content{
+    padding: 0px 0px 0px 70px;
+}
 /* inside task card */
 .task-card h2 {
     text-align: center;
@@ -84,7 +86,7 @@ input {
     border-radius: 5px;
 }
 input#time-set {
-    width: 15%;
+    width: 16%;
 }
 select {
     width: 15%;
@@ -93,6 +95,7 @@ select {
     border: 0.5px solid #ccc;
     border-radius: 5px;
 }
+
 /* 4. The Button Style */
 button {
     padding: 9px 18px;
