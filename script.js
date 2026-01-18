@@ -44,42 +44,60 @@ saveBtn2.addEventListener('click', () => {
 });
 
 //5. Timer functionality
-let countdown; // This variable will hold our "metronome" so we can stop it later
-
-const startBtn = document.getElementById('start-timer');
-const timerDisplay = document.getElementById('timer-display');
+let countdown;
 const timeInput = document.getElementById('time-set');
+const timeSelect = document.getElementById('time-unit'); // Grab the select box
+const startBtn = document.getElementById('start-timer');
 
 startBtn.addEventListener('click', function() {
-    // 1. Get the minutes from the input and convert to total seconds
-    let minutes = parseInt(timeInput.value);
+    // 1. Logic: Check if user used the dropdown OR typed a number
+    // We use parseInt on the select value because it says "15 minutes"
+    let minutes = parseInt(timeInput.value) || parseInt(timeSelect.value);
     
-    if (isNaN(minutes) || minutes <= 0) {
-        alert("Please enter a valid number of minutes!");
+    let totalSeconds = minutes * 60;
+
+    if (isNaN(totalSeconds) || totalSeconds <= 0) {
+        alert("Please select or enter a duration!");
         return;
     }
 
-    let totalSeconds = minutes * 60;
-
-    // 2. Clear any existing timer (so they don't overlap if clicked twice!)
     clearInterval(countdown);
 
-    // 3. Start the "Metronome" (Interval)
     countdown = setInterval(function() {
-        totalSeconds--; // Subtract 1 second
+        totalSeconds = Math.max(0, totalSeconds - 1);
 
-        // 4. Calculate display minutes and seconds
-        let displayMins = Math.floor(totalSeconds / 60);
-        let displaySecs = totalSeconds % 60;
+        let mins = Math.floor(totalSeconds / 60);
+        let secs = totalSeconds % 60;
+        
+        // Now this works because the input is type="text"
+        timeInput.value = `${mins}:${secs.toString().padStart(2, '0')}`;
 
-        // 5. Update the Screen (The DOM!)
-        // We use "padStart" to make sure 9 seconds looks like "09"
-        timerDisplay.textContent = `${displayMins}:${displaySecs.toString().padStart(2, '0')}`;
-
-        // 6. Stop when we hit zero
-        if (totalSeconds <= 0) {
+        if (totalSeconds === 0) {
             clearInterval(countdown);
-            alert("Time is up! Deep breath.");
+            alert("Time's up!");
         }
-    }, 1000); // 1000 milliseconds = 1 second
+    }, 1000);
+});
+// Grab the new buttons from the DOM
+const stopBtn = document.getElementById('stop-timer');
+const resetBtn = document.getElementById('reset-timer');
+
+// 1. The Stop Logic
+stopBtn.addEventListener('click', function() {
+    // We just stop the heartbeat. 
+    // The current time stays visible in the input box.
+    clearInterval(countdown);
+});
+
+// 2. The Reset Logic
+resetBtn.addEventListener('click', function() {
+    // First, stop any ticking heartbeat
+    clearInterval(countdown);
+    
+    // Second, clear the input box and the dropdown
+    timeInput.value = "";
+    timeSelect.selectedIndex = 0; // Sets dropdown back to the first option
+    
+    // Third, a nice touch: focus the input so the user can type a new time immediately
+    timeInput.focus();
 });
