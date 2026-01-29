@@ -43,8 +43,7 @@ saveBtn2.addEventListener('click', () => {
     }
 });
 
-//5. Timer functionality
-let countdown;
+//5. Timer functionality for count down
 const timeInput = document.getElementById('time-set');
 const timeSelect = document.getElementById('time-unit'); // Grab the select box
 const startBtn = document.getElementById('start-timer');
