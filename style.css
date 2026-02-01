@@ -112,11 +112,17 @@ button:hover {
     background-color: #4962ed; /* lightens the button when you put your mouse over it */
 }
 
-footer{
+footer {
+    height: 70px;
+    background-color: #1533d8;
+    margin-top: 40px;
+    box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.429);
+
+}
+
+.footer-content{
     text-align: center;
     padding: 20px;
-    background-color: #1533d8;
     color: white;
-    /* position: absolute; */
     width: 100%;
 }
