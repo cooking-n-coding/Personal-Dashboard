@@ -68,6 +68,26 @@ saveBtn2.addEventListener('click', () => {
     }
 });
 
+function renderTasks() {
+    laterList.innerHTML = ""; // Clear the old view
+
+    laterTasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        
+        // We use innerHTML here to easily add the buttons and checkbox
+        li.innerHTML = `
+            <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+            <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
+                ${task.text}
+            </span>
+            <button onclick="deleteTask(${index})">Delete</button>
+        `;
+        
+        laterList.appendChild(li);
+    });
+}
+
 //5. Timer functionality for count down
 // TOP OF FILE: Global variables (The memory of our app)
 let countdown; 
