@@ -1,30 +1,61 @@
-// 1. Select the elements for urgent tasks
+// 1. Our "Source of Truth" (The Array)
 const urgentInput = document.getElementById('focus-input');
 const saveBtn1 = document.getElementById('save-focus');
 const urgentList = document.getElementById('urgent-list');
+let urgentTasks = []; 
 
-// 2. Add the "EventListener" to save focused tasks
+// 2. The Button Listener (Only updates DATA)
 saveBtn1.addEventListener('click', () => {
-    // Get the value from the input box
-    const taskText = urgentInput.value;
+    const taskText = urgentInput.value.trim();
 
-    // Check if the user actually typed something
     if (taskText !== "") {
-        // Create a new list item (li)
-        const newTask = document.createElement('li');
+        // Instead of creating HTML, we create an OBJECT and push it to the array
+        const newTaskObject = {
+            text: taskText,
+            completed: false
+        };
         
-        // Set the text of that li to our taskText
-        newTask.textContent = taskText;
-
-        // Add the li to our list
-        urgentList.appendChild(newTask);
-
-        // Clear the input box for the next task
-        urgentInput.value = "";
+        urgentTasks.push(newTaskObject); // Add to data
+        urgentInput.value = "";          // Clear input
+        renderTasks();                   // Tell the UI to update based on the new data
     } else {
         alert("Please enter a task!");
     }
 });
+
+// 3. The Render Function (The "Artist" that draws the UI)
+function renderTasks() {
+    urgentList.innerHTML = ""; // Clear the old view
+
+    urgentTasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        
+        // We use innerHTML here to easily add the buttons and checkbox
+        li.innerHTML = `
+            <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+            <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
+                ${task.text}
+            </span>
+            <button onclick="deleteTask(${index})">Delete</button>
+        `;
+        
+        urgentList.appendChild(li);
+    });
+}
+
+// Function to delete a specific index
+function deleteTask(index) {
+    // .splice(where to start, how many to remove)
+    urgentTasks.splice(index, 1); 
+    renderTasks(); // Redraw the UI to show it's gone
+}
+
+// Function to cross out the task
+function toggleTask(index) {
+    urgentTasks[index].completed = !urgentTasks[index].completed;
+    renderTasks();
+}
 
 //3. select elements for unprior tasks
 const unpriorInput = document.getElementById('unfocus-input');
@@ -44,59 +75,95 @@ saveBtn2.addEventListener('click', () => {
 });
 
 //5. Timer functionality for count down
-const timeInput = document.getElementById('time-set');
-const timeSelect = document.getElementById('time-unit'); // Grab the select box
-const startBtn = document.getElementById('start-timer');
+// TOP OF FILE: Global variables (The memory of our app)
+let countdown; 
 
-startBtn.addEventListener('click', function() {
-    // 1. Logic: Check if user used the dropdown OR typed a number
-    // We use parseInt on the select value because it says "15 minutes"
-    let minutes = parseInt(timeInput.value) || parseInt(timeSelect.value);
+// Select UI elements
+const timeInput = document.getElementById('time-set');
+const timeSelect = document.getElementById('time-unit');
+const startBtn = document.getElementById('start-timer');
+const stopBtn = document.getElementById('stop-timer');
+const resetBtn = document.getElementById('reset-timer');
+// const timeInput = document.getElementById('time-set');
+
+timeInput.addEventListener('input', (e) => {
+    // 1. Remove anything that isn't a number
+    let value = e.target.value.replace(/\D/g, ''); 
     
-    let totalSeconds = minutes * 60;
+    // 2. Auto-format logic
+    if (value.length > 2) {
+        // If more than 2 digits, split them: [First 2]:[Remaining]
+        e.target.value = value.slice(0, 2) + ":" + value.slice(2, 4);
+    } else {
+        e.target.value = value;
+    }
+});
+
+// INITIAL STATE: Hide Stop and Reset until we start
+stopBtn.style.display = 'none';
+resetBtn.style.display = 'none';
+
+// --- INTERACTIVE FEATURE 1: Dropdown Updates Input ---
+timeSelect.addEventListener('change', () => {
+    // When the user picks "15 min", we extract "15" and put it in the box
+    const selectedMins = parseInt(timeSelect.value);
+    timeInput.value = `${selectedMins}:00`;
+});
+
+// --- INTERACTIVE FEATURE 2: Button Toggling Function ---
+function toggleTimerUI(isRunning) {
+    if (isRunning) {
+        startBtn.style.display = 'none';
+        stopBtn.style.display = 'inline-block';
+        resetBtn.style.display = 'inline-block';
+    } else {
+        startBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
+    }
+}
+
+// --- TIMER LOGIC ---
+startBtn.addEventListener('click', () => {
+    let timeParts = timeInput.value.split(':'); // Splits "25:00" into ["25", "00"]
+    let minutes = parseInt(timeParts[0]);
+    let seconds = timeParts[1] ? parseInt(timeParts[1]) : 0;
+    
+    let totalSeconds = (minutes * 60) + seconds;
 
     if (isNaN(totalSeconds) || totalSeconds <= 0) {
-        alert("Please select or enter a duration!");
+        alert("Please set a time first!");
         return;
     }
 
+    toggleTimerUI(true); // Show Stop/Reset
     clearInterval(countdown);
 
-    countdown = setInterval(function() {
-        totalSeconds = Math.max(0, totalSeconds - 1);
+    countdown = setInterval(() => {
+        totalSeconds--;
 
-        let mins = Math.floor(totalSeconds / 60);
-        let secs = totalSeconds % 60;
-        
-        // Now this works because the input is type="text"
-        timeInput.value = `${mins}:${secs.toString().padStart(2, '0')}`;
-
-        if (totalSeconds === 0) {
+        if (totalSeconds < 0) {
             clearInterval(countdown);
+            toggleTimerUI(false);
             alert("Time's up!");
+            return;
         }
+
+        let m = Math.floor(totalSeconds / 60);
+        let s = totalSeconds % 60;
+        timeInput.value = `${m}:${s.toString().padStart(2, '0')}`;
     }, 1000);
 });
-// Grab the new buttons from the DOM
-const stopBtn = document.getElementById('stop-timer');
-const resetBtn = document.getElementById('reset-timer');
 
-// 1. The Stop Logic
-stopBtn.addEventListener('click', function() {
-    // We just stop the heartbeat. 
-    // The current time stays visible in the input box.
+// Reset Button Logic
+resetBtn.addEventListener('click', () => {
     clearInterval(countdown);
+    timeInput.value = "";
+    toggleTimerUI(false); // Go back to start state
 });
 
-// 2. The Reset Logic
-resetBtn.addEventListener('click', function() {
-    // First, stop any ticking heartbeat
+// Stop Button Logic
+stopBtn.addEventListener('click', () => {
     clearInterval(countdown);
-    
-    // Second, clear the input box and the dropdown
-    timeInput.value = "";
-    timeSelect.selectedIndex = 0; // Sets dropdown back to the first option
-    
-    // Third, a nice touch: focus the input so the user can type a new time immediately
-    timeInput.focus();
+    // Note: We don't hide the buttons here so they can click 'Start' again to resume
 });
