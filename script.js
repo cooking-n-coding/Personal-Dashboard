@@ -88,6 +88,22 @@ function renderTasks() {
     });
 }
 
+// Function to delete a specific index
+function deleteTask(index) {
+    // .splice(where to start, how many to remove)
+    urgentTasks.splice(index, 1); 
+    renderTasks(); // Redraw the UI to show it's gone
+    laterTasks.splice(index, 1); 
+    renderTasks(); // Redraw the UI to show it's gone
+}
+
+// Function to cross out the task
+function toggleTask(index) {
+    urgentTasks[index].completed = !urgentTasks[index].completed;
+    laterTasks[index].completed = !laterTasks[index].completed;
+    renderTasks();
+}
+
 //5. Timer functionality for count down
 // TOP OF FILE: Global variables (The memory of our app)
 let countdown; 
