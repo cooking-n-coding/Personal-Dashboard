@@ -1,79 +1,42 @@
-// 1. Our "Source of Truth" (The Array)
-const urgentInput = document.getElementById('focus-input');
+// selecting the elements for urgent tasks
+const focusedInput = document.getElementById('focus-input');
 const saveBtn1 = document.getElementById('save-focus');
-const urgentList = document.getElementById('urgent-list');
-let urgentTasks = []; 
+const focusedList = document.getElementById('urgent-list');
+let focusedTasks = []; 
 
-// 2. The Button Listener (Only updates DATA)
-saveBtn1.addEventListener('click', () => {
-    const taskText = urgentInput.value.trim();
-
-    if (taskText !== "") {
-        // Instead of creating HTML, we create an OBJECT and push it to the array
-        const newTaskObject = {
-            text: taskText,
-            completed: false
-        };
-        
-        urgentTasks.push(newTaskObject); // Add to data
-        urgentInput.value = "";          // Clear input
-        renderTasks();                   // Tell the UI to update based on the new data
-    } else {
-        alert("Please enter a task!");
-    }
-});
-
-// 3. The Render Function (The "Artist" that draws the UI)
-function renderTasks() {
-    urgentList.innerHTML = ""; // Clear the old view
-
-    urgentTasks.forEach((task, index) => {
-        const li = document.createElement('li');
-        li.className = 'task-item';
-        
-        // We use innerHTML here to easily add the buttons and checkbox
-        li.innerHTML = `
-            <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${index})">
-            <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">
-                ${task.text}
-            </span>
-            <button onclick="deleteTask(${index})">Delete</button>
-        `;
-        
-        urgentList.appendChild(li);
-    });
-}
-
-//3. select elements for unprior tasks
-const unpriorInput = document.getElementById('unfocus-input');
+// selecting elements for later tasks
+const unfocusedInput = document.getElementById('unfocus-input');
 const saveBtn2 = document.getElementById('save-unfocus');
-const laterList = document.getElementById('later-list');// Function to delete a specific index
-function deleteTask(index) {
-    // .splice(where to start, how many to remove)
-    urgentTasks.splice(index, 1); 
-    renderTasks(); // Redraw the UI to show it's gone
+const unfocusedList = document.getElementById('later-list');
+let unfocusedTasks = [];
+
+// reuseable function to add tasks
+const addTask = (inputTask, taskArray, renderFn) => {
+  const textTask = inputTask.value.trim();
+  if (!textTask) {
+    alert("Please enter a task");
+    return;
+  }
+
+  taskArray.push({
+    text : textTask,
+    completed: false,
+    isEditing: false
+  });
+
+  inputTask.value = "";
+  renderFn();
 }
 
-// Function to cross out the task
-function toggleTask(index) {
-    urgentTasks[index].completed = !urgentTasks[index].completed;
-    renderTasks();
-}
-//4. add event listener to add unprior tasks.
-saveBtn2.addEventListener('click', () => {
-    const taskText = unpriorInput.value;
-    if (taskText !== "") {
-        const newTask = document.createElement('li');
-        newTask.textContent = taskText;
-        laterList.appendChild(newTask);
-        unpriorInput.value = "";
-    } else {
-        alert("Please enter a task!");
-    }
-});
+// eventlisteners for both task lists
+focusedBtn.addEventListener('click', () =>
+  addTask(focusedInput, focusedTasks, renderFocusedTasks)
+);
 
-//5. Timer functionality for count down
-// TOP OF FILE: Global variables (The memory of our app)
+unfocusedBtn.addEventListener('click', () =>
+  addTask(unfocusedInput, unfocusedTasks, renderUnfocusedTasks)
+);
+
 let countdown; 
 
 // Select UI elements
@@ -165,3 +128,4 @@ stopBtn.addEventListener('click', () => {
     clearInterval(countdown);
     // Note: We don't hide the buttons here so they can click 'Start' again to resume
 });
+
