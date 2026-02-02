@@ -87,6 +87,16 @@ input {
     border: 0.5px solid #ccc;
     border-radius: 5px;
 }
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+li button {
+  margin-left: 5px;
+}
+
 input#time-set {
     width: 16%;
 }

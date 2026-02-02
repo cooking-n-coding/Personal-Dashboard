@@ -1,12 +1,12 @@
 // selecting the elements for urgent tasks
 const focusedInput = document.getElementById('focus-input');
-const saveBtn1 = document.getElementById('save-focus');
+const focusedBtn = document.getElementById('save-focus');
 const focusedList = document.getElementById('urgent-list');
 let focusedTasks = []; 
 
 // selecting elements for later tasks
 const unfocusedInput = document.getElementById('unfocus-input');
-const saveBtn2 = document.getElementById('save-unfocus');
+const unfocusedBtn = document.getElementById('save-unfocus');
 const unfocusedList = document.getElementById('later-list');
 let unfocusedTasks = [];
 
@@ -101,7 +101,7 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
   });
 }
 
-
+// specific render functions
 function renderFocusedTasks() {
   renderTasks(focusedTasks, focusedList, true);
 }
@@ -109,6 +109,8 @@ function renderFocusedTasks() {
 function renderUnfocusedTasks() {
   renderTasks(unfocusedTasks, unfocusedList, false);
 }
+
+
 
 let countdown; 
 
