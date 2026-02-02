@@ -37,6 +37,79 @@ unfocusedBtn.addEventListener('click', () =>
   addTask(unfocusedInput, unfocusedTasks, renderUnfocusedTasks)
 );
 
+// renderfubctions for both task lists
+function renderTasks(taskArray, taskList, allowComplete = false) {
+  taskList.innerHTML = "";
+
+  taskArray.forEach((task, index) => {
+    const li = document.createElement('li');
+
+    // ---- Checkbox (optional) ----
+    if (allowComplete) {
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = task.completed;
+      checkbox.addEventListener('change', () => {
+        task.completed = !task.completed;
+        renderTasks(taskArray, taskList, allowComplete);
+      });
+      li.appendChild(checkbox);
+    }
+
+    // ---- Text or Input (EDIT MODE) ----
+    if (task.isEditing) {
+      const editInput = document.createElement('input');
+      editInput.value = task.text;
+
+      const saveBtn = document.createElement('button');
+      saveBtn.textContent = 'Save';
+      saveBtn.addEventListener('click', () => {
+        task.text = editInput.value.trim();
+        task.isEditing = false;
+        renderTasks(taskArray, taskList, allowComplete);
+      });
+
+      li.append(editInput, saveBtn);
+    } else {
+      const span = document.createElement('span');
+      span.textContent = task.text;
+
+      if (task.completed) {
+        span.classList.add('completed');
+      }
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', () => {
+        task.isEditing = true;
+        renderTasks(taskArray, taskList, allowComplete);
+      });
+
+      li.append(span, editBtn);
+    }
+
+    // ---- Delete ----
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', () => {
+      taskArray.splice(index, 1);
+      renderTasks(taskArray, taskList, allowComplete);
+    });
+
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
+  });
+}
+
+
+function renderFocusedTasks() {
+  renderTasks(focusedTasks, focusedList, true);
+}
+
+function renderUnfocusedTasks() {
+  renderTasks(unfocusedTasks, unfocusedList, false);
+}
+
 let countdown; 
 
 // Select UI elements
