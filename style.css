@@ -28,7 +28,7 @@ nav ul {
     gap: 20px;
 }
 nav li{
-    height: 0.7rem;
+    padding: 0.25rem 0 0;
 }
 nav a{
     height: 100%;
@@ -40,6 +40,7 @@ nav a:hover{
 }
 nav h1:first-child{
     margin-right: auto;
+    height: 1rem;
 }
 /* 2. The Layout - Using Flexbox to center our dashboard */
 main {
