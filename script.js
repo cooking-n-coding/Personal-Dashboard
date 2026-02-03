@@ -107,9 +107,12 @@ function renderFocusedTasks() {
 }
 
 function renderUnfocusedTasks() {
-  renderTasks(unfocusedTasks, unfocusedList, false);
+  renderTasks(unfocusedTasks, unfocusedList, true);
 }
 
+
+console.log("focusedList", focusedList);
+console.log("focusedTasks", focusedTasks);
 
 
 let countdown; 
@@ -158,6 +161,7 @@ function toggleTimerUI(isRunning) {
         resetBtn.style.display = 'none';
     }
 }
+
 
 // --- TIMER LOGIC ---
 startBtn.addEventListener('click', () => {
