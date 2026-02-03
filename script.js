@@ -43,31 +43,27 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
 
   taskArray.forEach((task, index) => {
     const li = document.createElement('li');
-    li.classList.add('task-item');
 
+    // ---- Checkbox (optional) ----
     if (allowComplete) {
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = task.completed;
-      checkbox.classList.add('task-checkbox');
-
       checkbox.addEventListener('change', () => {
         task.completed = !task.completed;
         renderTasks(taskArray, taskList, allowComplete);
       });
-
+      li.classList.add('task-item');
       li.appendChild(checkbox);
     }
 
+    // ---- Text or Input (EDIT MODE) ----
     if (task.isEditing) {
       const editInput = document.createElement('input');
       editInput.value = task.text;
-      editInput.classList.add('edit-input');
 
       const saveBtn = document.createElement('button');
       saveBtn.textContent = 'Save';
-      saveBtn.classList.add('save-btn');
-
       saveBtn.addEventListener('click', () => {
         task.text = editInput.value.trim();
         task.isEditing = false;
@@ -78,7 +74,6 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     } else {
       const span = document.createElement('span');
       span.textContent = task.text;
-      span.classList.add('task-text');
 
       if (task.completed) {
         span.classList.add('completed');
@@ -86,8 +81,6 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
 
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Edit';
-      editBtn.classList.add('edit-btn');
-
       editBtn.addEventListener('click', () => {
         task.isEditing = true;
         renderTasks(taskArray, taskList, allowComplete);
@@ -96,10 +89,9 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       li.append(span, editBtn);
     }
 
+    // ---- Delete ----
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
-    deleteBtn.classList.add('delete-btn');
-
     deleteBtn.addEventListener('click', () => {
       taskArray.splice(index, 1);
       renderTasks(taskArray, taskList, allowComplete);
@@ -109,7 +101,6 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     taskList.appendChild(li);
   });
 }
-
 
 // specific render functions
 function renderFocusedTasks() {
