@@ -48,7 +48,7 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     if (allowComplete) {
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.checked = task.completed;
+      checkbox.checked = task.completed; 
       checkbox.addEventListener('change', () => {
         task.completed = !task.completed;
         renderTasks(taskArray, taskList, allowComplete);
@@ -61,7 +61,7 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     if (task.isEditing) {
       const editInput = document.createElement('input');
       editInput.value = task.text;
-
+      
       const saveBtn = document.createElement('button');
       saveBtn.textContent = 'Save';
       saveBtn.addEventListener('click', () => {
