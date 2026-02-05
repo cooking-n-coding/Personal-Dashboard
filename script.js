@@ -44,63 +44,69 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
   taskArray.forEach((task, index) => {
     const li = document.createElement('li');
 
-    // ---- Checkbox (optional) ----
+    // LEFT
+    const left = document.createElement('div');
+    left.className = 'task-left';
+
     if (allowComplete) {
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.checked = task.completed; 
-      checkbox.addEventListener('change', () => {
+      checkbox.checked = task.completed;
+      checkbox.onchange = () => {
         task.completed = !task.completed;
         renderTasks(taskArray, taskList, allowComplete);
-      });
-      li.classList.add('task-item');
-      li.appendChild(checkbox);
+      };
+      left.appendChild(checkbox);
     }
 
-    // ---- Text or Input (EDIT MODE) ----
-    if (task.isEditing) {
-      const editInput = document.createElement('input');
-      editInput.value = task.text;
-      
-      const saveBtn = document.createElement('button');
-      saveBtn.textContent = 'Save';
-      saveBtn.addEventListener('click', () => {
-        task.text = editInput.value.trim();
-        task.isEditing = false;
-        renderTasks(taskArray, taskList, allowComplete);
-      });
+    // CENTER
+    const center = document.createElement('div');
+    center.className = 'task-center';
 
-      li.append(editInput, saveBtn);
+    if (task.isEditing) {
+      const input = document.createElement('input');
+      input.value = task.text;
+      input.className = 'edit-input';
+      center.appendChild(input);
     } else {
       const span = document.createElement('span');
       span.textContent = task.text;
-
-      if (task.completed) {
-        span.classList.add('completed');
-      }
-
-      const editBtn = document.createElement('button');
-      editBtn.textContent = 'Edit';
-      editBtn.addEventListener('click', () => {
-        task.isEditing = true;
-        renderTasks(taskArray, taskList, allowComplete);
-      });
-
-      li.append(span, editBtn);
+      span.className = 'task-text';
+      if (task.completed) span.classList.add('completed');
+      center.appendChild(span);
     }
 
-    // ---- Delete ----
+    // RIGHT
+    const right = document.createElement('div');
+    right.className = 'task-right';
+
+    const editBtn = document.createElement('button');
+    editBtn.textContent = task.isEditing ? 'Save' : 'Edit';
+    editBtn.onclick = () => {
+      if (task.isEditing) {
+        const input = center.querySelector('input');
+        task.text = input.value.trim();
+        task.isEditing = false;
+      } else {
+        task.isEditing = true;
+      }
+      renderTasks(taskArray, taskList, allowComplete);
+    };
+
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
-    deleteBtn.addEventListener('click', () => {
+    deleteBtn.onclick = () => {
       taskArray.splice(index, 1);
       renderTasks(taskArray, taskList, allowComplete);
-    });
+    };
 
-    li.appendChild(deleteBtn);
+    right.append(editBtn, deleteBtn);
+
+    li.append(left, center, right);
     taskList.appendChild(li);
   });
 }
+
 
 // specific render functions
 function renderFocusedTasks() {
