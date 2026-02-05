@@ -88,60 +88,48 @@ input {
     border-radius: 5px;
 }
 
+.task-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  margin: 8px 0;
+  background: #f9f9f9;
+  border-radius: 6px;
+  align-items: flex-start;
+}
+
+/* Left */
+.task-left {
+  flex-shrink: 0;
+}
+
+/* Center (text wraps here) */
+.task-center {
+  flex: 1;
+  word-break: break-word;
+}
+
+.task-text {
+  line-height: 1.4;
+}
+
+/* Right */
+.task-right {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Editing */
+.edit-input {
+  width: 100%;
+  padding: 5px;
+}
+
+/* Completed */
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
-}
-
-li button {
-  margin-left: 5px;
-}
-/* Task row */
-.task-item {
-  display: flex;
-  align-items: center;
-    justify-content: space-between;
-  gap: 10px;
-  margin: 10px 0;
-  padding: 8px;
-  background: #f9f9f9;
-  border-radius: 6px;
-}
-
-/* Task text */
-.task-text {
-  flex: 1;
-  font-size: 1rem;
-}
-
-/* Checkbox */
-.task-checkbox {
-  transform: scale(1.2);
-}
-
-/* Edit input */
-.edit-input {
-  flex: 1;
-  padding: 6px;
-}
-
-/* Buttons */
-.edit-btn {
-  background-color: #ffaa00;
-}
-
-.save-btn {
-  background-color: #28a745;
-}
-
-.delete-btn {
-  background-color: #dc3545;
-}
-
-.edit-btn:hover,
-.save-btn:hover,
-.delete-btn:hover {
-  opacity: 0.85;
 }
 
 input#time-set {
