@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <!-- link for icons -->
+     <!-- <link rel="stylesheet" href="https://www.flaticon.com/free-icons/unchecked"> -->
 </head>
 <body>
     <header>
@@ -28,9 +30,9 @@
                 <input type="text" id="focus-input" name="focus-input" placeholder="Enter your focused task here">
                 <button class="add-button" id="save-focus">Save Focus</button>
                 </div>
-                <ol id="urgent-list">
+                <ul class="list-container" id="urgent-list">
                     <!-- list of task will be created here -->
-                </ol>
+                </ul>
             </div>
             <div class="unfocused-area">
                 <h3>Task to-do later</h3>
@@ -39,9 +41,9 @@
                 <input type="text" id="unfocus-input" name="unfocus-input" placeholder="Enter your unprior task here">
                 <button class="add-button" id="save-unfocus">Save Later</button>
                 </div>
-                <ol id="later-list">
+                <ul class="list-container" id="later-list">
                     <!-- list of unfocused task will be created here -->
-                </ol>
+                </ul>
             </div>
             <div class="timer">
                 <h3>Set Your timer</h3>

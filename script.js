@@ -43,6 +43,7 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
 
   taskArray.forEach((task, index) => {
     const li = document.createElement('li');
+    li.className = task.completed ? 'completed' : '';
 
     // LEFT
     const left = document.createElement('div');

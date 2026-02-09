@@ -106,51 +106,79 @@ input {
     font-size: 14px;
     cursor: pointer;
     border-radius: 20px;
-
 }
-.task-item {
-  display: flex;
-  gap: 10px;
+.add-button:hover {
+    background-color: #4962ed; /* lightens the button when you put your mouse over it */
+}   
+.list-container li {
+    list-style: none;
+    font-size: 20px;
+    user-select: none; /* Prevents text from being accidentally highlighted when clicking on tasks */
+    cursor: pointer; /* Indicates that list items are interactive */
+    position: relative; /* Needed for the custom checkbox to be positioned correctly */
+}
+.list-container li ::before{
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-image: url(images/unchecked.png);
+    background-size: cover;
+    background-position: center;
+    top: 12px;
+    left: 8px;
+}
+.list-container li.completed {
+    color: #1533d8;
+    text-decoration: line-through;
+}
+.list-container li.completed::before {
+    background-image: url(images/checked.png);
+}
+/* .task-item {
+    display: flex;
+    gap: 10px;
   padding: 10px;
   margin: 8px 0;
   background: #f9f9f9;
   border-radius: 6px;
   align-items: flex-start;
-}
+} */
 
 /* Left */
-.task-left {
+/* .task-left {
   flex-shrink: 0;
-}
+} */
 
 /* Center (text wraps here) */
-.task-center {
+/* .task-center {
   flex: 1;
   word-break: break-word;
-}
+} */
 
-.task-text {
+/* .task-text {
   line-height: 1.5;
-}
+} */
 
 /* Right */
-.task-right {
+/* .task-right {
   display: flex;
   gap: 6px;
   flex-shrink: 0;
-}
+} */
 
 /* Editing */
-.edit-input {
+/* .edit-input {
   width: 100%;
   padding: 5px;
-}
+} */
 
 /* Completed */
-.completed {
+/* .completed {
   text-decoration: line-through;
   opacity: 0.6;
-}
+} */
 
 input#time-set {
     width: 16%;
@@ -164,9 +192,6 @@ select {
 }
 
 
-button:hover {
-    background-color: #4962ed; /* lightens the button when you put your mouse over it */
-}
 
 footer {
     height: 70px;
