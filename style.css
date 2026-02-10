@@ -109,15 +109,48 @@ input {
 }
 .add-button:hover {
     background-color: #4962ed; /* lightens the button when you put your mouse over it */
-}   
+}  
+
 .list-container li {
     list-style: none;
     font-size: 20px;
     user-select: none; /* Prevents text from being accidentally highlighted when clicking on tasks */
     cursor: pointer; /* Indicates that list items are interactive */
-    position: relative; /* Needed for the custom checkbox to be positioned correctly */
+    position: relative;  /* Needed for the custom checkbox to be positioned correctly */
 }
-.list-container li ::before{
+.list-container li.completed {
+    color: #1533d8;
+    text-decoration: line-through;
+}
+
+.task-left input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    accent-color: #1533d8;
+}
+
+/* Checked state */
+/* .task-left input[type="checkbox"]:checked {
+    background-color: #1533d8;
+    border-color: #1533d8;
+} */
+
+/* Add a tick mark */
+/* .task-left input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px; */
+    /* border-radius: 50%;    small inner circle for tick effect */
+    /* background: white; */
+/* } */
+
+/*.list-container li::before{
     content: '';
     position: absolute;
     height: 20px;
@@ -129,13 +162,12 @@ input {
     top: 12px;
     left: 8px;
 }
-.list-container li.completed {
-    color: #1533d8;
-    text-decoration: line-through;
-}
+
 .list-container li.completed::before {
-    background-image: url(images/checked.png);
-}
+    background-image: url(images/checked.png); 
+}*/
+
+
 /* .task-item {
     display: flex;
     gap: 10px;
@@ -169,10 +201,10 @@ input {
 } */
 
 /* Editing */
-/* .edit-input {
+.edit-input {
   width: 100%;
   padding: 5px;
-} */
+}
 
 /* Completed */
 /* .completed {
