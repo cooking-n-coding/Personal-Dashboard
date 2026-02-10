@@ -118,10 +118,11 @@ input {
     cursor: pointer; /* Indicates that list items are interactive */
     position: relative;  /* Needed for the custom checkbox to be positioned correctly */
 }
-.list-container li.completed {
-    color: #1533d8;
-    text-decoration: line-through;
+.task-text.completed {
+  color: #1533d8;
+  text-decoration: line-through;
 }
+
 
 .task-list input[type="checkbox"] {
     width: 20px;
@@ -136,6 +137,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: rgba(203, 209, 203, 0.5);;
 }
 /* Checked state */
 /* .task-left input[type="checkbox"]:checked {
@@ -206,10 +208,10 @@ input {
 } */
 
 /* Editing */
-.edit-input {
+/* .edit-input {
   width: 100%;
   padding: 5px;
-}
+} */
 
 /* Completed */
 /* .completed {
