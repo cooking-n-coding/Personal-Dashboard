@@ -42,70 +42,63 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
   taskList.innerHTML = "";
 
   taskArray.forEach((task, index) => {
-    const li = document.createElement('li');
-    li.className = task.completed ? 'completed' : '';
+    const li = document.createElement('li');     
+    li.className = task.completed ? 'completed' : '';     
+    // LEFT     
+    const left = document.createElement('div');     
+    left.className = 'task-left';     
+    if (allowComplete) {       
+      const checkbox = document.createElement('input');       
+      checkbox.type = 'checkbox';       
+      checkbox.checked = task.completed;       
+      checkbox.addEventListener('change', () => {         
+        task.completed = !task.completed;         
+        renderTasks(taskArray, taskList, allowComplete);       
+      });       
+      left.appendChild(checkbox);     
+    }     
+    // CENTER     
+    const center = document.createElement('div');     
+    center.className = 'task-center'; 
 
-    // LEFT
-    const left = document.createElement('div');
-    left.className = 'task-left';
-
-    if (allowComplete) {
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = task.completed;
-      checkbox.onchange = () => {
-        task.completed = !task.completed;
-        renderTasks(taskArray, taskList, allowComplete);
-      };
-      left.appendChild(checkbox);
-    }
-
-    // CENTER
-    const center = document.createElement('div');
-    center.className = 'task-center';
-
-    if (task.isEditing) {
-      const input = document.createElement('input');
-      input.value = task.text;
-      input.className = 'edit-input';
-      center.appendChild(input);
-    } else {
-      const span = document.createElement('span');
-      span.textContent = task.text;
-      span.className = 'task-text';
-      if (task.completed) span.classList.add('completed');
-      center.appendChild(span);
-    }
-
-    // RIGHT
-    const right = document.createElement('div');
-    right.className = 'task-right';
-
-    const editBtn = document.createElement('button');
-    editBtn.textContent = task.isEditing ? 'Save' : 'Edit';
-    editBtn.onclick = () => {
-      if (task.isEditing) {
-        const input = center.querySelector('input');
-        task.text = input.value.trim();
-        task.isEditing = false;
-      } else {
-        task.isEditing = true;
-      }
-      renderTasks(taskArray, taskList, allowComplete);
-    };
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.onclick = () => {
-      taskArray.splice(index, 1);
-      renderTasks(taskArray, taskList, allowComplete);
-    };
-
-    right.append(editBtn, deleteBtn);
-
-    li.append(left, center, right);
-    taskList.appendChild(li);
-  });
+    if (task.isEditing) {       
+      const input = document.createElement('input');       
+      input.value = task.text;       
+      input.className = 'edit-input';       
+      center.appendChild(input);     
+    } else {       
+      const span = document.createElement('span');       
+      span.textContent = task.text;       
+      span.className = 'task-text';       
+      
+      if (task.completed) span.classList.add('completed');       
+      center.appendChild(span);     }     
+      // RIGHT     
+      const right = document.createElement('div');     
+      right.className = 'task-right';     
+      const editBtn = document.createElement('button');     
+      editBtn.textContent = task.isEditing ? 'Save' : 'Edit';     
+      editBtn.onclick = () => {       if (task.isEditing) {         
+        const input = center.querySelector('input');         
+        task.text = input.value.trim();        
+        
+        task.isEditing = false;       
+      } 
+      else {         
+        task.isEditing = true;       
+      }       
+      renderTasks(taskArray, taskList, allowComplete);     
+    };     
+    const deleteBtn = document.createElement('button');     
+    deleteBtn.textContent = 'Delete';     
+    deleteBtn.onclick = () => {       
+      taskArray.splice(index, 1);       
+      renderTasks(taskArray, taskList, allowComplete);     
+    };     
+    right.append(editBtn, deleteBtn);     
+    li.append(left, center, right);     
+    taskList.appendChild(li);   
+  }); 
 }
 
 
