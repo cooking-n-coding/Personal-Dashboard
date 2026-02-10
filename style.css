@@ -123,7 +123,7 @@ input {
     text-decoration: line-through;
 }
 
-.task-left input[type="checkbox"] {
+.task-list input[type="checkbox"] {
     width: 20px;
     height: 20px;
     outline: none;
@@ -132,6 +132,11 @@ input {
     accent-color: #1533d8;
 }
 
+.task-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 /* Checked state */
 /* .task-left input[type="checkbox"]:checked {
     background-color: #1533d8;
