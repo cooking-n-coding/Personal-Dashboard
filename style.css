@@ -95,7 +95,7 @@ input {
     border: none;
     outline: none;
     padding: 10px;
-    font-weight: 20px;
+    font-weight: 400;
 }
 .add-button{
     border: none;
@@ -113,7 +113,8 @@ input {
 
 .list-container li {
     list-style: none;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 400;
     margin: 10px 0;
     user-select: none; /* Prevents text from being accidentally highlighted when clicking on tasks */
     cursor: pointer; /* Indicates that list items are interactive */
@@ -143,18 +144,23 @@ input {
     accent-color: #1533d8;
 }
 
-.hidden {
-  display: none;
-}
-
 .task-list {
     /* background-color: rgba(203, 209, 203, 0.5); */
-    padding: 0 0px 2px;
+    padding: 4px 0px;
     justify-self: start; /* Centers the text in the grid cell */
     min-width: 0; /* Ensures the center can shrink properly when text is long */    
 }
 .task-text {
   word-break: break-word;
+  display: flex;
+}
+.edit-input {
+    width: 375px; 
+    padding: 6px 8px;
+    /* border: 0.5px solid #ccc; */
+    background-color: #ccc;
+    border-radius: 5px;
+    font-size: 15px;
 }
 .ESD-buttons {
     display: flex;
