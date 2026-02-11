@@ -43,10 +43,10 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
 
   taskArray.forEach((task, index) => {
     const li = document.createElement('li');     
-    li.className = task.completed ? 'completed' : '';     
+    li.className = 'task-item';     
     // LEFT     
     const left = document.createElement('div');     
-    left.className = 'task-list';     
+    left.className = 'checkbox';     
     if (allowComplete) {       
       const checkbox = document.createElement('input');       
       checkbox.type = 'checkbox';       
@@ -58,8 +58,8 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       left.appendChild(checkbox);     
     }     
     // CENTER     
-    // const center = document.createElement('div');     
-    // center.className = 'task-center'; 
+    const center = document.createElement('div');     
+    center.className = 'task-list'; 
 
     if (task.isEditing) {       
       const input = document.createElement('input');       
@@ -75,8 +75,8 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       left.appendChild(span);     
     }     
       // RIGHT     
-      // const right = document.createElement('div');     
-      // right.className = 'task-right';     
+      const right = document.createElement('div');     
+      right.className = 'ESD-buttons';     
       const editBtn = document.createElement('button');     
       editBtn.textContent = task.isEditing ? 'Save' : 'Edit';     
       editBtn.addEventListener('click', () => {       
