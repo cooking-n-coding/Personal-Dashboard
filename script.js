@@ -72,7 +72,7 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       span.className = 'task-text';       
 
       if (task.completed) span.classList.add('completed');       
-      left.appendChild(span);     
+      center.appendChild(span);     
     }     
       // RIGHT     
       const right = document.createElement('div');     
@@ -97,8 +97,8 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       taskArray.splice(index, 1);       
       renderTasks(taskArray, taskList, allowComplete);     
     });     
-    left.append(editBtn, deleteBtn);     
-    li.append(left);     
+    right.append(editBtn, deleteBtn);     
+    li.append(left, center, right);     
     taskList.appendChild(li);   
   }); 
 }
