@@ -64,8 +64,8 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     if (task.isEditing) {       
       const input = document.createElement('input');       
       input.value = task.text;       
-      input.className = 'edit-input hidden';       
-      left.appendChild(input);     
+      input.className = 'edit-input';       
+      center.appendChild(input);     
     } else {       
       const span = document.createElement('span');       
       span.textContent = task.text;       
