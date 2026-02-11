@@ -64,7 +64,7 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     if (task.isEditing) {       
       const input = document.createElement('input');       
       input.value = task.text;       
-      input.className = 'edit-input';       
+      input.className = 'edit-input hidden';       
       left.appendChild(input);     
     } else {       
       const span = document.createElement('span');       
@@ -77,11 +77,12 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       // RIGHT     
       const right = document.createElement('div');     
       right.className = 'ESD-buttons';     
-      const editBtn = document.createElement('button');     
+      const editBtn = document.createElement('button');
+      editBtn.className = 'esd-btn';     
       editBtn.textContent = task.isEditing ? 'Save' : 'Edit';     
       editBtn.addEventListener('click', () => {       
         if (task.isEditing) {         
-        const input = left.querySelector('input');         
+        const input = li.querySelector('.edit-input');         
         task.text = input.value.trim();        
         
         task.isEditing = false;       
@@ -92,7 +93,8 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       renderTasks(taskArray, taskList, allowComplete);     
     });     
     const deleteBtn = document.createElement('button');     
-    deleteBtn.textContent = 'Delete';     
+    deleteBtn.textContent = 'Delete';  
+    deleteBtn.className = 'esd-btn';   
     deleteBtn.addEventListener('click', () => {       
       taskArray.splice(index, 1);       
       renderTasks(taskArray, taskList, allowComplete);     
