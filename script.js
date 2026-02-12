@@ -54,7 +54,9 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
 
   taskArray.forEach((task, index) => {
     const li = document.createElement('li');     
-    li.className = 'task-item';     
+    li.className = 'task-item'; 
+    li.setAttribute('tabindex', '0');
+    
     // LEFT     
     const left = document.createElement('div');     
     left.className = 'checkbox';     
@@ -102,7 +104,9 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
         task.isEditing = true;       
       }       
       renderTasks(taskArray, taskList, allowComplete);     
-    });     
+    });    
+
+    // script for delete button 
     const deleteBtn = document.createElement('button');     
     deleteBtn.textContent = 'Delete';  
     deleteBtn.className = 'esd-btn';  
@@ -110,7 +114,15 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     deleteBtn.addEventListener('click', () => {       
       taskArray.splice(index, 1);       
       renderTasks(taskArray, taskList, allowComplete);     
-    });     
+    });
+    
+    // script for delete button with keyboard accessibility
+    li.addEventListener('keydown',(e) =>{
+      if(e.key === 'Delete' && task.completed){
+        taskArray.splice(index, 1);       
+        renderTasks(taskArray, taskList, allowComplete);     
+      }
+    })     
     right.append(editBtn, deleteBtn);     
     li.append(left, center, right);     
     taskList.appendChild(li);   
