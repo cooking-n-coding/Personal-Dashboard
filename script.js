@@ -84,7 +84,12 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       span.textContent = task.text;       
       span.className = 'task-text';       
 
-      if (task.completed) span.classList.add('completed');       
+      if (task.completed) span.classList.add('completed'); 
+      
+      span.addEventListener('click', () => {         
+        task.completed = !task.completed;         
+        renderTasks(taskArray, taskList, allowComplete);       
+      });
       center.appendChild(span);     
     }     
       // RIGHT     
