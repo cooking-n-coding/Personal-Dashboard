@@ -29,13 +29,24 @@ const addTask = (inputTask, taskArray, renderFn) => {
 }
 
 // eventlisteners for both task lists
-focusedBtn.addEventListener('click', () =>
+focusedBtn.addEventListener('click',() =>
   addTask(focusedInput, focusedTasks, renderFocusedTasks)
 );
+focusedInput.addEventListener('keydown',(e) => {
+  if (e.key === 'Enter') {
+    addTask(focusedInput, focusedTasks, renderFocusedTasks);
+  }
+});
 
 unfocusedBtn.addEventListener('click', () =>
   addTask(unfocusedInput, unfocusedTasks, renderUnfocusedTasks)
 );
+
+unfocusedInput.addEventListener('keydown',(e) => {
+  if (e.key === 'Enter') {
+    addTask(unfocusedInput, unfocusedTasks, renderUnfocusedTasks);
+  }
+});
 
 // renderfubctions for both task lists
 function renderTasks(taskArray, taskList, allowComplete = false) {
