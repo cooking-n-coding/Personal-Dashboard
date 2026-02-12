@@ -94,7 +94,8 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
     });     
     const deleteBtn = document.createElement('button');     
     deleteBtn.textContent = 'Delete';  
-    deleteBtn.className = 'esd-btn';   
+    deleteBtn.className = 'esd-btn';  
+    if (!task.completed) deleteBtn.disabled = true;
     deleteBtn.addEventListener('click', () => {       
       taskArray.splice(index, 1);       
       renderTasks(taskArray, taskList, allowComplete);     
