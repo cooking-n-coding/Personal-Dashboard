@@ -76,7 +76,8 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
 
     if (task.isEditing) {       
       const input = document.createElement('input');       
-      input.value = task.text;       
+      input.value = task.text;  
+      // input.id = `edit-${index}`;     
       input.className = 'edit-input';       
       center.appendChild(input);     
     } else {       
@@ -110,6 +111,19 @@ function renderTasks(taskArray, taskList, allowComplete = false) {
       }       
       renderTasks(taskArray, taskList, allowComplete);     
     });    
+    //   editBtn.id = `edit-${index}`;
+    //   editBtn.addEventListener('click', () => {       
+    //     if (task.isEditing) {         
+    //     const input = li.querySelector('.edit-input');         
+    //     task.text = input.value.trim();        
+        
+    //     task.isEditing = false;       
+    //   } 
+    //   else {         
+    //     task.isEditing = true;       
+    //   }       
+    //   renderTasks(taskArray, taskList, allowComplete);     
+    // });    
 
     // script for delete button 
     const deleteBtn = document.createElement('button');     
