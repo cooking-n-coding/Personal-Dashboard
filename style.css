@@ -111,6 +111,7 @@ input {
     background-color: #4962ed; /* lightens the button when you put your mouse over it */
 }  
 
+/* CSS for adding tasks */
 .list-container li {
     list-style: none;
     font-size: 18px;
@@ -179,7 +180,27 @@ input {
 }  
 .esd-btn:hover {
     background-color: #4962ed; /* lightens the button when you put your mouse over it */
-}  
+} 
+
+/* css for timer */
+#stop-timer, #reset-timer {
+  display: none;
+}
+
+/* style to remove webkit scroll */
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    appearance: textfield;
+}
+
+
 /* Checked state */
 /* .task-left input[type="checkbox"]:checked {
     background-color: #1533d8;

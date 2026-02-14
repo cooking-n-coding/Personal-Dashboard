@@ -163,96 +163,120 @@ console.log("focusedList", focusedList);
 console.log("focusedTasks", focusedTasks);
 
 
-let countdown; 
-
+/*--------------------- Timer script ---------------------------*/
 // Select UI elements
-const timeInput = document.getElementById('time-set');
-const timeSelect = document.getElementById('time-unit');
-const startBtn = document.getElementById('start-timer');
-const stopBtn = document.getElementById('stop-timer');
-const resetBtn = document.getElementById('reset-timer');
-// const timeInput = document.getElementById('time-set');
+const input = document.getElementById("time-set");
+const increaseBtn = document.getElementById("increase-time");
+const decreaseBtn = document.getElementById("decrease-time");
 
-timeInput.addEventListener('input', (e) => {
-    // 1. Remove anything that isn't a number
-    let value = e.target.value.replace(/\D/g, ''); 
+const startBtn = document.getElementById("start-timer");
+const stopBtn = document.getElementById("stop-timer");
+const resetBtn = document.getElementById("reset-timer");
+
+let timer = null;
+let remainingSeconds = 0;
+let displaySpan = null;
+
+
+// timeInput.addEventListener('input', (e) => {
+//     // 1. Remove anything that isn't a number
+//     let value = e.target.value.replace(/\D/g, ''); 
     
-    // 2. Auto-format logic
-    if (value.length > 2) {
-        // If more than 2 digits, split them: [First 2]:[Remaining]
-        e.target.value = value.slice(0, 2) + ":" + value.slice(2, 4);
-    } else {
-        e.target.value = value;
-    }
-});
+//     // 2. Auto-format logic
+//     if (value.length > 2) {
+//         // If more than 2 digits, split them: [First 2]:[Remaining]
+//         e.target.value = value.slice(0, 2) + ":" + value.slice(2, 4);
+//     } else {
+//         e.target.value = value;
+//     }
+// });
 
 // INITIAL STATE: Hide Stop and Reset until we start
-stopBtn.style.display = 'none';
-resetBtn.style.display = 'none';
+// stopBtn.style.display = 'none';
+// resetBtn.style.display = 'none';
 
-// --- INTERACTIVE FEATURE 1: Dropdown Updates Input ---
-timeSelect.addEventListener('change', () => {
-    // When the user picks "15 min", we extract "15" and put it in the box
-    const selectedMins = parseInt(timeSelect.value);
-    timeInput.value = `${selectedMins}:00`;
+// script to increase time by 5 minutes
+increaseBtn.addEventListener("click", () => {
+  let value = parseInt(input.value) || 0;
+  if (value < 120) {
+    input.value = value + 5;
+  }
 });
 
-// --- INTERACTIVE FEATURE 2: Button Toggling Function ---
-function toggleTimerUI(isRunning) {
-    if (isRunning) {
-        startBtn.style.display = 'none';
-        stopBtn.style.display = 'inline-block';
-        resetBtn.style.display = 'inline-block';
-    } else {
-        startBtn.style.display = 'inline-block';
-        stopBtn.style.display = 'none';
-        resetBtn.style.display = 'none';
-    }
+// script to decrease time by 5 minutes 
+decreaseBtn.addEventListener("click", () => {
+  let value = parseInt(input.value) || 0;
+  if (value > 5) {
+    input.value = value - 5;
+  }
+});
+
+// helper function to format seconds into MM:SS
+const formatTime = (seconds) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+
+  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
+// logic to start the timer
+startBtn.addEventListener("click", () => {
 
-// --- TIMER LOGIC ---
-startBtn.addEventListener('click', () => {
-    let timeParts = timeInput.value.split(':'); // Splits "25:00" into ["25", "00"]
-    let minutes = parseInt(timeParts[0]);
-    let seconds = timeParts[1] ? parseInt(timeParts[1]) : 0;
-    
-    let totalSeconds = (minutes * 60) + seconds;
+  if (timer) return; // prevent duplicate timers
 
-    if (isNaN(totalSeconds) || totalSeconds <= 0) {
-        alert("Please set a time first!");
-        return;
+  const minutes = parseInt(input.value);
+
+  if (!minutes || minutes < 5) {
+    alert("Enter minimum 5 minutes");
+    return;
+  }
+
+  remainingSeconds = minutes * 60;
+
+  // Replace input with span
+  displaySpan = document.createElement("span");
+  displaySpan.id = "timer-display";
+  displaySpan.textContent = formatTime(remainingSeconds);
+
+  input.replaceWith(displaySpan);
+
+  // Show stop & reset
+  stopBtn.style.display = "inline-block";
+  resetBtn.style.display = "inline-block";
+
+  timer = setInterval(() => {
+    remainingSeconds--;
+    displaySpan.textContent = formatTime(remainingSeconds);
+
+    if (remainingSeconds <= 0) {
+      clearInterval(timer);
+      timer = null;
+      playSound();
     }
 
-    toggleTimerUI(true); // Show Stop/Reset
-    clearInterval(countdown);
-
-    countdown = setInterval(() => {
-        totalSeconds--;
-
-        if (totalSeconds < 0) {
-            clearInterval(countdown);
-            toggleTimerUI(false);
-            alert("Time's up!");
-            return;
-        }
-
-        let m = Math.floor(totalSeconds / 60);
-        let s = totalSeconds % 60;
-        timeInput.value = `${m}:${s.toString().padStart(2, '0')}`;
-    }, 1000);
+  }, 1000);
 });
 
-// Reset Button Logic
-resetBtn.addEventListener('click', () => {
-    clearInterval(countdown);
-    timeInput.value = "";
-    toggleTimerUI(false); // Go back to start state
+// logic to stop the timer
+stopBtn.addEventListener("click", () => {
+  clearInterval(timer);
+  timer = null;
 });
 
-// Stop Button Logic
-stopBtn.addEventListener('click', () => {
-    clearInterval(countdown);
-    // Note: We don't hide the buttons here so they can click 'Start' again to resume
+// logic to reset the timer
+resetBtn.addEventListener("click", () => {
+
+  clearInterval(timer);
+  timer = null;
+
+  remainingSeconds = 0;
+
+  // Replace span back with input
+  displaySpan.replaceWith(input);
+
+  input.value = "";
+
+  stopBtn.style.display = "none";
+  resetBtn.style.display = "none";
 });
 
