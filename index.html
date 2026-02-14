@@ -45,28 +45,20 @@
                     <!-- list of unfocused task will be created here -->
                 </ul>
             </div>
+            <!-- Html for timer -->
             <div class="timer">
-  <h3>Set Your Timer</h3>
-
-  <div class="timer-controls">
-    <input type="number" id="time-set" min="1" placeholder="Minutes">
-    <select id="time-unit">
-      <option value="15">15 min</option>
-      <option value="30">30 min</option>
-      <option value="45">45 min</option>
-      <option value="60">1 hour</option>
-    </select>
-  </div>
-
-  <h2 id="timer-display">00:00</h2>
-
-  <div class="timer-buttons">
-    <button id="start-timer">Start</button>
-    <button id="stop-timer">Stop</button>
-    <button id="reset-timer">Reset</button>
-  </div>
-</div>
-
+                <h3>Set Your Timer</h3>
+                    <div class="timer-controls">
+                        <button id="decrease-time">-</button>
+                            <input type="number" id="time-set" min="5" max="120" placeholder="30 mins" autocomplete="off">
+                        <button id="increase-time">+</button>
+                    </div>
+                <div class="timer-buttons">
+                    <button id="start-timer">Start</button>
+                    <button id="stop-timer">Stop</button>
+                    <button id="reset-timer">Reset</button>
+                </div>
+            </div>
         </div>
     </div>
     </main>
