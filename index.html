@@ -48,15 +48,17 @@
             <!-- Html for timer -->
             <div class="timer">
                 <h3>Set Your Timer</h3>
-                    <div class="timer-controls">
-                        <button id="decrease-time">-</button>
-                            <input type="number" id="time-set" min="5" max="120" placeholder="30 mins" autocomplete="off">
-                        <button id="increase-time">+</button>
+                    <div class="timer-content">
+                        <div class="timer-controls">
+                            <button class="time-ctrl" id="decrease-time">-</button>
+                                <input type="number" id="time-set" min="5" max="120" placeholder="30 mins" autocomplete="off">
+                            <button class="time-ctrl" id="increase-time">+</button>
+                        </div>
+                    <div class="timer-buttons">
+                        <button class="time-control" id="start-timer">Start</button>
+                        <button class="time-control" id="stop-timer">Stop</button>
+                        <button class="time-control" id="reset-timer">Reset</button>
                     </div>
-                <div class="timer-buttons">
-                    <button id="start-timer">Start</button>
-                    <button id="stop-timer">Stop</button>
-                    <button id="reset-timer">Reset</button>
                 </div>
             </div>
         </div>
